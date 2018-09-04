@@ -1,0 +1,31 @@
+docker commit <container Id>  <image name>:<tag> # Save the state of the container
+
+docker exec -it <container id> <cmd> # Enter into running container
+
+sudo truncate -s 0 $(docker inspect --format='{{.LogPath}}' 9aacc128d442)
+
+set style line 1 lc rgb '#0060ad' lt 1 lw 2 pt 7 ps 1.5   # --- blue
+plot 'response.dat' with linespoints ls 1
+
+filenames = "response pid_response"
+plot for [file in filenames] file".dat" using 1:2 with lines
+
+t1 
+t2 = t1 + 10 sec
+
+req1 at t1
+req2 at t2
+last 10 second -- no. of req = req2 - req1
+
+res_time1 at t1
+res_time2 at t2
+
+if req >= 1024
+	req_res_time = res_time2
+else
+	req_res_time = (1000 * res_time2) - ((1000 - req) * res_time1) / req	
+
+1000 * res_time1 = sum_res_time1 of last to last 1000 requests
+1000 * res_time2 = sum_res_time2 of last 1000 requests
+
+(1000 * res_time2) - ((1000 - req) * res_time1) / req
