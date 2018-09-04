@@ -1,4 +1,4 @@
-# again
+
 # Here is the list of Resources and some points to to be noted.
 
 docker build -t awesome .
